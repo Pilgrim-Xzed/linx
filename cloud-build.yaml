@@ -1,0 +1,23 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        docker pull gcr.io/xcode111/linx:latest || exit 0
+  - name: gcr.io/cloud-builders/docker
+    timeout: 1200s
+    args:
+      [
+        'build',
+        '-f',
+        'Dockerfile',
+        '-t',
+        'gcr.io/xcode111/linx',
+        '--cache-from',
+        'gcr.io/xcode111/linx:latest',
+        '.',
+      ]
+timeout: 1200s
+images:
+  - gcr.io/xcode111/linx
